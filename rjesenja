@@ -1,0 +1,38 @@
+/*prvi*/
+CREATE TABLE grupe(
+  id_grupe INT PRIMARY KEY,
+  oznaka_grupe CHAR(50),
+  smjer CHAR(50),
+  broj_studenata SMALLINT  
+);
+
+/*drugi*/
+CREATE TABLE student(
+  br_indeksa INT PRIMARY KEY,
+  ime CHAR(30) NOT NULL,
+  prezime CHAR(30) NOT NULL,
+  grupa INT,
+  godina_upisa DATETIME,
+  godina_studija SMALLINT,
+  CONSTRAINT grupa FOREIGN KEY(grupa) REFERENCES grupe(id_grupe)
+  
+);
+
+/*treci*/
+ALTER TABLE student ADD prosjek SMALLINT;
+ALTER TABLE student ADD CONSTRAINT provjera_prosjeka CHECK(prosjek >0);
+ALTER TABLE student DROP COLUMN godina_studija;
+
+/*cetvrti*/
+CREATE TABLE tel_imenik(
+  broj_telefona INT NOT NULL,
+  ime CHAR(30) NOT NULL,
+  prezime CHAR(30) NOT NULL,
+  email CHAR(50),
+  datum_unosa DATETIME,
+  CONSTRAINT primarni_kljuc PRIMARY KEY(broj_telefona, prezime)  
+);
+
+/*peti*/
+CREATE INDEX i_prosjek ON student(prosjek);
+CREATE INDEX i_tel_imenik ON tel_imenik(broj_telefona, datum_unosa);
